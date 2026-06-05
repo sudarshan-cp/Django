@@ -1,4 +1,4 @@
-# Django Job Board
+# Jobnest
 
 A job board web application built with Django.
 
@@ -42,17 +42,22 @@ A job board web application built with Django.
    pip install -r requirements.txt
    ```
 
-4. Apply migrations:
+4. Copy `.env.example` to `.env` and fill in your values:
+   ```bash
+   cp .env.example .env
+   ```
+
+5. Apply migrations:
    ```bash
    python manage.py migrate
    ```
 
-5. Run the development server:
+6. Run the development server:
    ```bash
    python manage.py runserver
    ```
 
-6. Visit `http://127.0.0.1:8000` in your browser.
+7. Visit `http://127.0.0.1:8000` in your browser.
 
 ## Project Structure
 
@@ -60,7 +65,7 @@ A job board web application built with Django.
 Django/
 ├── accounts/       # User authentication app
 ├── jobs/           # Job listings app
-├── jobboard/       # Project settings and root URLs
+├── jobnest/        # Project settings and root URLs
 ├── manage.py
 └── requirements.txt
 ```

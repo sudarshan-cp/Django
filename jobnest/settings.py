@@ -36,12 +36,12 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "jobboard.urls"
+ROOT_URLCONF = "jobnest.urls"
 
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "jobboard" / "templates"],
+        "DIRS": [BASE_DIR / "jobnest" / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -53,7 +53,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "jobboard.wsgi.application"
+WSGI_APPLICATION = "jobnest.wsgi.application"
 
 DATABASES = {
     "default": {
