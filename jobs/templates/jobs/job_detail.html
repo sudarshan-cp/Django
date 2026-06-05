@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}{{ job.title }} at {{ job.company }} — Jobnest{% endblock %}
+
+{% block content %}
+<section class="py-5">
+  <div class="container">
+    <div class="row g-4">
+
+      <!-- Main content -->
+      <div class="col-lg-8">
+        <a href="/jobs/" class="text-muted small text-decoration-none mb-3 d-inline-block">
+          <i class="bi bi-arrow-left me-1"></i>Back to Jobs
+        </a>
+        <div class="bg-white border rounded-3 p-4">
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <span class="badge badge-{{ job.job_type }} rounded-pill">{{ job.get_job_type_display }}</span>
+            <span class="text-muted small"><i class="bi bi-clock me-1"></i>Posted {{ job.posted_at|timesince }} ago</span>
+          </div>
+          <h1 class="fw-bold mb-1" style="font-size:1.75rem;">{{ job.title }}</h1>
+          <p class="text-muted mb-4"><i class="bi bi-building me-1"></i>{{ job.company }}</p>
+
+          <h5 class="fw-bold mb-3">Job Description</h5>
+          <div style="line-height:1.8;color:#334155;">{{ job.description|linebreaks }}</div>
+
+          {% if job.requirements %}
+          <h5 class="fw-bold mt-4 mb-3">Requirements</h5>
+          <div style="line-height:1.8;color:#334155;">{{ job.requirements|linebreaks }}</div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="col-lg-4">
+        <div class="bg-white border rounded-3 p-4 sticky-top" style="top:80px;">
+          <h5 class="fw-bold mb-4">Job Overview</h5>
+          <ul class="list-unstyled d-flex flex-column gap-3">
+            <li class="d-flex gap-3 align-items-start">
+              <i class="bi bi-building text-primary mt-1"></i>
+              <div><div class="small text-muted">Company</div><div class="fw-semibold">{{ job.company }}</div></div>
+            </li>
+            <li class="d-flex gap-3 align-items-start">
+              <i class="bi bi-geo-alt text-primary mt-1"></i>
+              <div><div class="small text-muted">Location</div><div class="fw-semibold">{{ job.location }}</div></div>
+            </li>
+            <li class="d-flex gap-3 align-items-start">
+              <i class="bi bi-briefcase text-primary mt-1"></i>
+              <div><div class="small text-muted">Job Type</div><div class="fw-semibold">{{ job.get_job_type_display }}</div></div>
+            </li>
+            {% if job.salary %}
+            <li class="d-flex gap-3 align-items-start">
+              <i class="bi bi-cash text-primary mt-1"></i>
+              <div><div class="small text-muted">Salary</div><div class="fw-semibold">{{ job.salary }}</div></div>
+            </li>
+            {% endif %}
+            <li class="d-flex gap-3 align-items-start">
+              <i class="bi bi-calendar text-primary mt-1"></i>
+              <div><div class="small text-muted">Posted</div><div class="fw-semibold">{{ job.posted_at|date:"M d, Y" }}</div></div>
+            </li>
+          </ul>
+          <hr/>
+          <a href="/accounts/login/" class="btn btn-primary w-100 py-2 fw-semibold">
+            <i class="bi bi-send me-2"></i>Apply Now
+          </a>
+          <a href="/jobs/" class="btn btn-outline-secondary w-100 mt-2 py-2">
+            <i class="bi bi-arrow-left me-2"></i>Back to Listings
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}

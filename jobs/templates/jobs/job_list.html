@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Browse Jobs — Jobnest{% endblock %}
+
+{% block content %}
+
+<section class="py-4" style="background:linear-gradient(135deg,#4f46e5,#7c3aed);">
+  <div class="container">
+    <h2 class="text-white fw-bold mb-3">Browse Jobs</h2>
+    <form method="get" class="search-bar d-flex gap-2">
+      <input type="text" name="q" value="{{ query }}" class="form-control form-control-lg" placeholder="Search by title, company or location..."/>
+      {% if job_type %}<input type="hidden" name="job_type" value="{{ job_type }}"/>{% endif %}
+      <button type="submit" class="btn btn-primary btn-lg px-4"><i class="bi bi-search"></i></button>
+    </form>
+  </div>
+</section>
+
+<section class="py-5">
+  <div class="container">
+    <div class="row g-4">
+
+      <!-- Filters -->
+      <div class="col-lg-3">
+        <div class="bg-white border rounded-3 p-4">
+          <h6 class="fw-bold mb-3">Job Type</h6>
+          <div class="d-flex flex-column gap-2">
+            <a href="/jobs/?q={{ query }}" class="btn btn-sm {% if not job_type %}btn-primary{% else %}btn-outline-secondary{% endif %} text-start">All Types</a>
+            {% for value, label in job_types %}
+            <a href="/jobs/?q={{ query }}&job_type={{ value }}" class="btn btn-sm {% if job_type == value %}btn-primary{% else %}btn-outline-secondary{% endif %} text-start">{{ label }}</a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Job list -->
+      <div class="col-lg-9">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <p class="text-muted mb-0"><strong>{{ jobs|length }}</strong> job{{ jobs|length|pluralize }} found{% if query %} for "<strong>{{ query }}</strong>"{% endif %}</p>
+        </div>
+
+        {% if jobs %}
+        <div class="d-flex flex-column gap-3">
+          {% for job in jobs %}
+          <a href="/jobs/{{ job.pk }}/" class="job-card">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <span class="badge badge-{{ job.job_type }} rounded-pill mb-2">{{ job.get_job_type_display }}</span>
+                <div class="title">{{ job.title }}</div>
+                <div class="company mb-2"><i class="bi bi-building me-1"></i>{{ job.company }}</div>
+                <div class="meta d-flex flex-wrap gap-3">
+                  <span><i class="bi bi-geo-alt me-1"></i>{{ job.location }}</span>
+                  {% if job.salary %}<span><i class="bi bi-cash me-1"></i>{{ job.salary }}</span>{% endif %}
+                  <span><i class="bi bi-clock me-1"></i>{{ job.posted_at|timesince }} ago</span>
+                </div>
+              </div>
+              <i class="bi bi-arrow-right-circle text-muted" style="font-size:1.4rem;"></i>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-5 bg-white rounded-3 border">
+          <i class="bi bi-search" style="font-size:3rem;color:#cbd5e1;"></i>
+          <h5 class="mt-3 text-muted">No jobs found</h5>
+          <p class="text-muted small">Try different keywords or remove filters.</p>
+          <a href="/jobs/" class="btn btn-primary btn-sm px-4">Clear Filters</a>
+        </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}
